@@ -493,6 +493,7 @@ void mouse(int button, int state, int x, int y)
 
 				poligonos.push_front(v);
 			}
+			break;
 		}
 		}
 		break;
@@ -670,7 +671,7 @@ void drawTriangulo(int xa, int ya, int xb, int yb, int xc, int yc)
 
 void drawPoligono(int *xa, int *ya, int i)
 {
-	if (i < 2) return;
+	if (i < 4) return;
 	
 	for(int j = 0; j < i-1; j++)
 	{
