@@ -5,21 +5,21 @@
  *
  * Aluno: Neemias Calebe Pereira Freire
  *
- * Objetivo: Desenvolva um Editor Gráfico em C/C++, estilo o Paint da Microsoft, utilizando as bibliotecas
- * GLUT/OpenGL. Leia os comentários do programa “paint.cpp” e utilize o programa “paint.cpp” como referência.
+ * Objetivo: Desenvolva um Editor Grafico em C/C++, estilo o Paint da Microsoft, utilizando as bibliotecas
+ * GLUT/OpenGL. Leia os comentï¿½rios do programa paint.cpp e utilize o programa paint.cpp como referencia.
  *
- *	--Translação são os botoes 'wasd' do teclado com suas direções padrões.
- *  --Rotação são os botoes 'q' e 'e'
- *  --Reflexão os botões 'r' com reflexão no eixo y e 't' no eixo x.
+ *	--Translacao os botoes 'wasd' do teclado com suas direcoes padroes.
+ *  --Rotacao sao os botoes 'q' e 'e'
+ *  --Reflexao os botoes 'r' com reflexcao no eixo y e 't' no eixo x.
  *  --Cisalhamento na tecla 'c'
  *  --Escala nas teclas '+' e '-' (bem auto-explicativo :D)
  *
- *	Essas transformações são feitas somente ultima forma desenhada na tela.
+ *	Essas transformacoes sao feitas somente ultima forma desenhada na tela.
  *
  *  Problemas conhecidos:
- *  --Cisalhamento e rotação de um retangulo realizam uma transformação inesperada (as vezes nem transforma nada)
- *  --Rotação desenfreada faz com que os objetos diminuam de tamanho até se tornarem somente um pixel. Provavelmente
- *	  não calculei o centroide de forma correta da forma.
+ *  --Cisalhamento e rotacao de um retangulo realizam uma transformacao inesperada (as vezes nem transforma nada)
+ *  --Rotacao desenfreada faz com que os objetos diminuam de tamanho ate se tornarem somente um pixel. Provavelmente
+ *	  nao calculei o centroide de forma correta.
  *
  */
 
@@ -283,7 +283,7 @@ void menu_popup(int value)
 
 /*
  * Controle das teclas comuns do teclado
- * Os controles são o wasd do teclado com suas direções padroes
+ * Os controles sao o wasd do teclado com suas direcoes padroes
  */
 void keyboard(unsigned char key, int x, int y)
 {
@@ -790,14 +790,12 @@ void escala(float sx, float sy)
 	xc /= tam;
 	yc /= tam;
 
-	// aplicar a escala
 	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
 	{
 		it->x *= sx;
 		it->y *= sy;
 	}
 
-	// calcular o centroide depois da escala
 	float xc_novo = 0, yc_novo = 0;
 	tam = 0;
 	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
@@ -809,7 +807,6 @@ void escala(float sx, float sy)
 	xc_novo /= tam;
 	yc_novo /= tam;
 
-	// ajustar as coordenadas para manter o centroide na mesma posição
 	float dx = xc - xc_novo;
 	float dy = yc - yc_novo;
 	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
@@ -863,7 +860,6 @@ void reflexao(bool x, bool y)
 	xc_novo /= tam;
 	yc_novo /= tam;
 
-	// ajustar as coordenadas para manter o centroide na mesma posição
 	float dx = xc - xc_novo;
 	float dy = yc - yc_novo;
 	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
@@ -916,7 +912,6 @@ void cisalhamento(float c)
 	xc_novo /= tam;
 	yc_novo /= tam;
 
-	// ajustar as coordenadas para manter o centroide na mesma posição
 	float dx = xc - xc_novo;
 	float dy = yc - yc_novo;
 	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
@@ -928,7 +923,7 @@ void cisalhamento(float c)
 
 /*
 	Tentei implementar da forma que esta nos slides, mas a unica que funcionou foi
-	essa implementação no site: http://members.chello.at/~easyfilter/Bresenham.pdf
+	essa implementacao no site: http://members.chello.at/~easyfilter/Bresenham.pdf
 */
 void bresenham(int xa, int ya, int xb, int yb)
 {
