@@ -477,6 +477,7 @@ void mouse(int button, int state, int x, int y)
 					y_1 = height - y - 1;
 				}
 			}
+			break;
 		}
 		case POL:
 		{
