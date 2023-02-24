@@ -4,22 +4,22 @@
  * Autor: Prof. Laurindo de Sousa Britto Neto
  *
  * Aluno: Neemias Calebe Pereira Freire
- * 
+ *
  * Objetivo: Desenvolva um Editor Gráfico em C/C++, estilo o Paint da Microsoft, utilizando as bibliotecas
  * GLUT/OpenGL. Leia os comentários do programa “paint.cpp” e utilize o programa “paint.cpp” como referência.
- * 
+ *
  *	--Translação são os botoes 'wasd' do teclado com suas direções padrões.
  *  --Rotação são os botoes 'q' e 'e'
  *  --Reflexão os botões 'r' com reflexão no eixo y e 't' no eixo x.
  *  --Cisalhamento na tecla 'c'
  *  --Escala nas teclas '+' e '-' (bem auto-explicativo :D)
- *  	
+ *
  *	Essas transformações são feitas somente ultima forma desenhada na tela.
- *	
+ *
  *  Problemas conhecidos:
  *  --Cisalhamento e rotação de um retangulo realizam uma transformação inesperada (as vezes nem transforma nada)
  *  --Rotação desenfreada faz com que os objetos diminuam de tamanho até se tornarem somente um pixel. Provavelmente
- *	  não calculei o centroide de forma correta da forma.	
+ *	  não calculei o centroide de forma correta da forma.
  *
  */
 
@@ -151,12 +151,14 @@ void pushCirculo(int xa, int ya, int xb, int yb)
 	pushVertice(xb, yb);
 }
 
-void pushPoligono() {
-    pushForma(POL);
-    for (auto it = poligonos.begin(); it != poligonos.end(); ++it) {
-        pushVertice(it->x, it->y);
-    }
-    poligonos.clear();
+void pushPoligono()
+{
+	pushForma(POL);
+	for (auto it = poligonos.begin(); it != poligonos.end(); ++it)
+	{
+		pushVertice(it->x, it->y);
+	}
+	poligonos.clear();
 }
 
 /*
@@ -262,7 +264,7 @@ void display(void)
 	if(modo == 3) modeName = "Retangulo";
 	if(modo == 4) modeName = "Poligono";
 	if(modo == 5) modeName = "Circulo";
-	
+
 	draw_text_stroke(0, height - 25, "Modo:" + modeName, 0.2);
 
 	glutSwapBuffers(); // manda o OpenGl renderizar as primitivas
@@ -280,191 +282,215 @@ void menu_popup(int value)
 
 /*
  * Controle das teclas comuns do teclado
- * Os controles são o wasd do teclado com suas direções padroes 
+ * Os controles são o wasd do teclado com suas direções padroes
  */
 void keyboard(unsigned char key, int x, int y)
 {
 	switch (key)   // key - variavel que possui valor ASCII da tecla precionada
 	{
-		case ESC:
-        {			
-			exit(EXIT_SUCCESS);
-			break;
-	    }
-	    case UP:
-	    {
-			translacao(0, TRANSLA);
-			glutPostRedisplay();
-			break;
-		}
-		case DOWN:
-	    {
-			translacao(0,-TRANSLA);
-			glutPostRedisplay();
-			break;
-		}
-		case LEFT:
-	    {
-			translacao(-TRANSLA,0);
-			glutPostRedisplay();
-			break;
-		}
-		case RIGHT:
-	    {
-			translacao(TRANSLA,0);
-			glutPostRedisplay();
-			break;
-		}
-		case ROTATE_E:
-		{	
-			rotacao(ANGULO);
-			glutPostRedisplay();
-			break;
-		}
-		case ROTATE_R:
-		{	
-			rotacao(-ANGULO);
-			glutPostRedisplay();
-			break;
-		}
-		case ESCALE_PLUS:
-		{	
-			escala(ESCALA_PLUS, ESCALA_PLUS);
-			glutPostRedisplay();
-			break;
-		}
-		case ESCALE_MINUS:
-		{	
-			escala(ESCALA_MINUS, ESCALA_MINUS);
-			glutPostRedisplay();
-			break;
-		}
-		case REFLEX_Y:
-		{
-			reflexao(false, true);
-			glutPostRedisplay();
-			break;
-		}
-		case REFLEX_X:
-		{
-			reflexao(true, false);
-			glutPostRedisplay();
-			break;
-		}
-		case CIS:{
-			cisalhamento(CISALHAMENTO);
-			glutPostRedisplay();
-			break;
-		}
-		case 32: {
-			pushPoligono();
-			poligonos.clear();
-			glutPostRedisplay();
-			break;
-		}
+	case ESC:
+	{
+		exit(EXIT_SUCCESS);
+		break;
+	}
+	case UP:
+	{
+		translacao(0, TRANSLA);
+		glutPostRedisplay();
+		break;
+	}
+	case DOWN:
+	{
+		translacao(0, -TRANSLA);
+		glutPostRedisplay();
+		break;
+	}
+	case LEFT:
+	{
+		translacao(-TRANSLA, 0);
+		glutPostRedisplay();
+		break;
+	}
+	case RIGHT:
+	{
+		translacao(TRANSLA, 0);
+		glutPostRedisplay();
+		break;
+	}
+	case ROTATE_E:
+	{
+		rotacao(ANGULO);
+		glutPostRedisplay();
+		break;
+	}
+	case ROTATE_R:
+	{
+		rotacao(-ANGULO);
+		glutPostRedisplay();
+		break;
+	}
+	case ESCALE_PLUS:
+	{
+		escala(ESCALA_PLUS, ESCALA_PLUS);
+		glutPostRedisplay();
+		break;
+	}
+	case ESCALE_MINUS:
+	{
+		escala(ESCALA_MINUS, ESCALA_MINUS);
+		glutPostRedisplay();
+		break;
+	}
+	case REFLEX_Y:
+	{
+		reflexao(false, true);
+		glutPostRedisplay();
+		break;
+	}
+	case REFLEX_X:
+	{
+		reflexao(true, false);
+		glutPostRedisplay();
+		break;
+	}
+	case CIS:
+	{
+		cisalhamento(CISALHAMENTO);
+		glutPostRedisplay();
+		break;
+	}
+	case 32:
+	{
+		pushPoligono();
+		poligonos.clear();
+		glutPostRedisplay();
+		break;
+	}
 
 
 
 	}
 }
 
-void mouse(int button, int state, int x, int y){
-    switch (button) {
-        case GLUT_LEFT_BUTTON:
-            switch(modo){
-                case LIN:{
-                    if (state == GLUT_DOWN) {
-                        if(click1){
-                            x_2 = x;
-                            y_2 = height - y - 1;
-                            pushLinha(x_1, y_1, x_2, y_2);
-                            click1 = false;
-                            glutPostRedisplay();
-                        }else{
-                            click1 = true;
-                            x_1 = x;
-                            y_1 = height - y - 1;
-                        }
-                    }
-                	break;
+void mouse(int button, int state, int x, int y)
+{
+	switch (button)
+	{
+	case GLUT_LEFT_BUTTON:
+		switch(modo)
+		{
+		case LIN:
+		{
+			if (state == GLUT_DOWN)
+			{
+				if(click1)
+				{
+					x_2 = x;
+					y_2 = height - y - 1;
+					pushLinha(x_1, y_1, x_2, y_2);
+					click1 = false;
+					glutPostRedisplay();
 				}
-				case RET:{
-					if (state == GLUT_DOWN) {
-                        if(click1){
-                            x_2 = x;
-                            y_2 = height - y - 1;
-                            pushQuadrilatero(x_1, y_1, x_2, y_2);
-                            click1 = false;
-                            glutPostRedisplay();
-                        }else{
-                            click1 = true;
-                            x_1 = x;
-                            y_1 = height - y - 1;
-                        }
-                    }
-					break;
+				else
+				{
+					click1 = true;
+					x_1 = x;
+					y_1 = height - y - 1;
 				}
-				case TRI:{
-					if (state == GLUT_DOWN) {
-						click1 = true;
-						
-						if(click3)
-						{
-							x_3 = x;
-							y_3 = height - y - 1;
-							
-							pushTriangulo(x_1, y_1, x_2, y_2, x_3, y_3);
-							
-							click1 = false;
-							click2 = false;
-							click2 = false;
-							glutPostRedisplay();
-						}
-						if (click2 && !click3)
-						{
-							click3 = true;
-							
-							x_2 = x;
-							y_2 = height - y - 1;
-						}
-						if (click1 && !click2)
-						{
-							click2 = true;
-							
-							x_1 = x;
-							y_1 = height - y;
-							x_2 = x_1;
-							y_2 = y_1;
-						}	
-                    }
-					break;
+			}
+			break;
+		}
+		case RET:
+		{
+			if (state == GLUT_DOWN)
+			{
+				if(click1)
+				{
+					x_2 = x;
+					y_2 = height - y - 1;
+					pushQuadrilatero(x_1, y_1, x_2, y_2);
+					click1 = false;
+					glutPostRedisplay();
 				}
-				case CIR:{
-					if (state == GLUT_DOWN) {
-                        if(click1){
-                            x_2 = x;
-                            y_2 = height - y - 1;
-                            pushCirculo(x_1, y_1, x_2, y_2);
-                            click1 = false;
-                            glutPostRedisplay();
-                        }else{
-                            click1 = true;
-                            x_1 = x;
-                            y_1 = height - y - 1;
-                        }
-                    }
+				else
+				{
+					click1 = true;
+					x_1 = x;
+					y_1 = height - y - 1;
 				}
-				case POL:{
-					if(state == GLUT_DOWN){
-						vertice v;
-						v.x = x;
-						v.y = y;
-						
-						poligonos.push_front(v);
-					}
+			}
+			break;
+		}
+		case TRI:
+		{
+			if (state == GLUT_DOWN)
+			{
+				click1 = true;
+
+				if(click3)
+				{
+					x_3 = x;
+					y_3 = height - y - 1;
+
+					pushTriangulo(x_1, y_1, x_2, y_2, x_3, y_3);
+
+					click1 = false;
+					click2 = false;
+					click2 = false;
+					glutPostRedisplay();
 				}
-            }
-        break;
+				if (click2 && !click3)
+				{
+					click3 = true;
+
+					x_2 = x;
+					y_2 = height - y - 1;
+				}
+				if (click1 && !click2)
+				{
+					click2 = true;
+
+					x_1 = x;
+					y_1 = height - y;
+					x_2 = x_1;
+					y_2 = y_1;
+				}
+			}
+			break;
+		}
+		case CIR:
+		{
+			if (state == GLUT_DOWN)
+			{
+				if(click1)
+				{
+					x_2 = x;
+					y_2 = height - y - 1;
+					pushCirculo(x_1, y_1, x_2, y_2);
+					click1 = false;
+					glutPostRedisplay();
+				}
+				else
+				{
+					click1 = true;
+					x_1 = x;
+					y_1 = height - y - 1;
+				}
+			}
+		}
+		case POL:
+		{
+			if(state == GLUT_DOWN)
+			{
+				vertice v;
+				v.x = x;
+				v.y = y;
+
+				poligonos.push_front(v);
+			}
+		}
+		}
+		break;
 
 //        case GLUT_MIDDLE_BUTTON:
 //            if (state == GLUT_DOWN) {
@@ -477,8 +503,8 @@ void mouse(int button, int state, int x, int y){
 //                glutPostRedisplay();
 //            }
 //        break;
-            
-    }
+
+	}
 }
 
 
@@ -506,19 +532,21 @@ void drawPixel(int x, int y)
  *Funcao que desenha a lista de formas geometricas
  */
 void drawFormas()
-{	int raio;
+{
+	int raio;
 	//Apos o primeiro clique, desenha a reta com a posicao atual do mouse
 	if(click1)
 	{
 		if (modo == LIN) bresenham(x_1, y_1, m_x, m_y);
 		if (modo == RET) drawQuadrilatero(x_1, y_1, m_x, m_y);
 		if (modo == TRI) drawTriangulo(x_1, y_1, m_x, m_y, x_2, y_2);
-		
-		if (modo == CIR){
+
+		if (modo == CIR)
+		{
 			raio = sqrt(pow(x_1 - m_x, 2) + pow(y_1 - m_y, 2));
 			drawCirculo(x_1, y_1, raio);
-		} 
-			
+		}
+
 	}
 
 	//Percorre a lista de formas geometricas para desenhar
@@ -586,7 +614,7 @@ void drawFormas()
 		case POL:
 		{
 			int i = 0, x[500], y[500];
-			
+
 			//Percorre a lista de vertices da forma linha para desenhar
 			for(forward_list<vertice>::iterator v = f->v.begin(); v != f->v.end(); v++, i++)
 			{
@@ -628,7 +656,7 @@ void drawPoligono(int *xa, int *ya, int i)
 {
 	for(int j; j < i; j++)
 	{
-		bresenham(xa[j], ya[j], xa[j+1], ya[j+1]);
+		bresenham(xa[j], ya[j], xa[j + 1], ya[j + 1]);
 	}
 	bresenham(xa[i], ya[i], xa[0], ya[0]);
 }
@@ -637,17 +665,17 @@ void drawCirculo(int xm, int ym, int r)
 {
 	int d = 1 - r;
 	int delta_e = 3;
-	int delta_se = -2*r + 5;
+	int delta_se = -2 * r + 5;
 	int xi = 0, yi = r;
-	
+
 	drawPixel(xm - xi, ym + yi);
-	drawPixel(xm - yi, ym - xi); 
-	drawPixel(xm + xi, ym - yi); 
-	drawPixel(xm + yi, ym + xi); 
-	
+	drawPixel(xm - yi, ym - xi);
+	drawPixel(xm + xi, ym - yi);
+	drawPixel(xm + yi, ym + xi);
+
 	while(yi > xi)
 	{
-		
+
 		if (d < 0)
 		{
 			d += delta_e;
@@ -662,7 +690,7 @@ void drawCirculo(int xm, int ym, int r)
 			yi--;
 		}
 		xi += 1;
-		
+
 		drawPixel(xm + xi, ym + yi);
 		drawPixel(xm - xi, ym + yi);
 		drawPixel(xm + xi, ym - yi);
@@ -671,9 +699,9 @@ void drawCirculo(int xm, int ym, int r)
 		drawPixel(xm - yi, ym + xi);
 		drawPixel(xm + yi, ym - xi);
 		drawPixel(xm - yi, ym - xi);
-	
+
 	}
-	
+
 }
 
 void translacao(int dx = 0, int dy = 0)
@@ -692,94 +720,102 @@ void rotacao(float angulo)
 	float angulo_sen = sin(angulo);
 	float dx, dy, dx_1, dy_1;
 	int tam = 0;
-	
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        xc += it->x;
-        yc += it->y;
-        tam++;
-    }
-    
-    if (tam == 0) return;
-    
-	xc /= tam;
-    yc /= tam;
 
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        it->x -= xc;
-        it->y -= yc;
-    }
-	
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		xc += it->x;
+		yc += it->y;
+		tam++;
+	}
+
+	if (tam == 0) return;
+
+	xc /= tam;
+	yc /= tam;
+
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		it->x -= xc;
+		it->y -= yc;
+	}
+
 	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
 	{
 		dx = it->x;
 		dy = it->y;
-		
+
 		dx_1 = angulo_cos * dx - angulo_sen * dy;
 		dy_1 = angulo_sen * dx + angulo_cos * dy;
-		
+
 		it->x = dx_1;
 		it->y = dy_1;
 	}
-	
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        it->x += xc;
-        it->y += yc;
-    }
+
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		it->x += xc;
+		it->y += yc;
+	}
 }
 
 void escala(float sx, float sy)
 {
-    float xc = 0, yc = 0;
-    int tam = 0;
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        xc += it->x;
-        yc += it->y;
-        tam++;
-    }
-    xc /= tam;
-    yc /= tam;
+	float xc = 0, yc = 0;
+	int tam = 0;
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		xc += it->x;
+		yc += it->y;
+		tam++;
+	}
+	xc /= tam;
+	yc /= tam;
 
-    // aplicar a escala
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        it->x *= sx;
-        it->y *= sy;
-    }
+	// aplicar a escala
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		it->x *= sx;
+		it->y *= sy;
+	}
 
-    // calcular o centroide depois da escala
-    float xc_novo = 0, yc_novo = 0;
-    tam = 0;
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        xc_novo += it->x;
-        yc_novo += it->y;
-        tam++;
-    }
-    xc_novo /= tam;
-    yc_novo /= tam;
+	// calcular o centroide depois da escala
+	float xc_novo = 0, yc_novo = 0;
+	tam = 0;
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		xc_novo += it->x;
+		yc_novo += it->y;
+		tam++;
+	}
+	xc_novo /= tam;
+	yc_novo /= tam;
 
-    // ajustar as coordenadas para manter o centroide na mesma posição
-    float dx = xc - xc_novo;
-    float dy = yc - yc_novo;
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        it->x += dx;
-        it->y += dy;
-    }
+	// ajustar as coordenadas para manter o centroide na mesma posição
+	float dx = xc - xc_novo;
+	float dy = yc - yc_novo;
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		it->x += dx;
+		it->y += dy;
+	}
 }
 
 void reflexao(bool x, bool y)
 {
 	float xc = 0, yc = 0;
-    int tam = 0;
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        xc += it->x;
-        yc += it->y;
-        tam++;
-    }
-    xc /= tam;
-    yc /= tam;
-    
+	int tam = 0;
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		xc += it->x;
+		yc += it->y;
+		tam++;
+	}
+	xc /= tam;
+	yc /= tam;
+
 	if (x)
 	{
-	    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+		for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
 		{
 			it->x *= -1;
 		}
@@ -789,79 +825,86 @@ void reflexao(bool x, bool y)
 		for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
 		{
 			it->y *= -1;
-		}	
+		}
 	}
 	else
 	{
-	    return;	
+		return;
 	}
-	
-	float xc_novo = 0, yc_novo = 0;
-    tam = 0;
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        xc_novo += it->x;
-        yc_novo += it->y;
-        tam++;
-    }
-    
-    xc_novo /= tam;
-    yc_novo /= tam;
 
-    // ajustar as coordenadas para manter o centroide na mesma posição
-    float dx = xc - xc_novo;
-    float dy = yc - yc_novo;
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        it->x += dx;
-        it->y += dy;
-    }
+	float xc_novo = 0, yc_novo = 0;
+	tam = 0;
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		xc_novo += it->x;
+		yc_novo += it->y;
+		tam++;
+	}
+
+	xc_novo /= tam;
+	yc_novo /= tam;
+
+	// ajustar as coordenadas para manter o centroide na mesma posição
+	float dx = xc - xc_novo;
+	float dy = yc - yc_novo;
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		it->x += dx;
+		it->y += dy;
+	}
 }
 
-void cisalhamento(float c) 
+void cisalhamento(float c)
 {
-    float x, y;
-    
-    float matriz[2][2] = {
-        {1.0f, c},
-        {0.0f, 1.0f}
-    };
-    
-    float xc = 0, yc = 0;
-    int tam = 0;
-    
-	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        xc += it->x;
-        yc += it->y;
-        tam++;
-    }
-    xc /= tam;
-    yc /= tam;
-    
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        x = it->x;
-        y = it->y;
+	float x, y;
 
-        it->x = matriz[0][0] * x + matriz[0][1] * y;
-        it->y = matriz[1][0] * x + matriz[1][1] * y;
-    }
-    
-    float xc_novo = 0, yc_novo = 0;
-    tam = 0;
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        xc_novo += it->x;
-        yc_novo += it->y;
-        tam++;
-    }
-    
-    xc_novo /= tam;
-    yc_novo /= tam;
+	float matriz[2][2] =
+	{
+		{1.0f, c},
+		{0.0f, 1.0f}
+	};
 
-    // ajustar as coordenadas para manter o centroide na mesma posição
-    float dx = xc - xc_novo;
-    float dy = yc - yc_novo;
-    for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it) {
-        it->x += dx;
-        it->y += dy;
-    }
+	float xc = 0, yc = 0;
+	int tam = 0;
+
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		xc += it->x;
+		yc += it->y;
+		tam++;
+	}
+	xc /= tam;
+	yc /= tam;
+
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		x = it->x;
+		y = it->y;
+
+		it->x = matriz[0][0] * x + matriz[0][1] * y;
+		it->y = matriz[1][0] * x + matriz[1][1] * y;
+	}
+
+	float xc_novo = 0, yc_novo = 0;
+	tam = 0;
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		xc_novo += it->x;
+		yc_novo += it->y;
+		tam++;
+	}
+
+	xc_novo /= tam;
+	yc_novo /= tam;
+
+	// ajustar as coordenadas para manter o centroide na mesma posição
+	float dx = xc - xc_novo;
+	float dy = yc - yc_novo;
+	for (auto it = formas.front().v.begin(); it != formas.front().v.end(); ++it)
+	{
+		it->x += dx;
+		it->y += dy;
+	}
 }
 
 /*
