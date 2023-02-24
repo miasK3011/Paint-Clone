@@ -77,6 +77,7 @@ int m_x, m_y;
 
 //Coordenadas do primeiro clique e do segundo clique do mouse
 int x_1, y_1, x_2, y_2, x_3, y_3;
+int xp[500], yp[500];
 
 //Indica o tipo de forma geometrica ativa para desenhar
 int modo = LIN;
@@ -364,10 +365,9 @@ void keyboard(unsigned char key, int x, int y)
 		pushPoligono();
 		poligonos.clear();
 		glutPostRedisplay();
+		click1 = false;
 		break;
 	}
-
-
 
 	}
 }
@@ -482,9 +482,13 @@ void mouse(int button, int state, int x, int y)
 		{
 			if(state == GLUT_DOWN)
 			{
+				click1 = true;
+				
 				vertice v;
 				v.x = x;
-				v.y = y;
+				v.y = height - y - 1;
+				
+				if (click1) x_1 = v.x; y_1 = v.y;
 
 				poligonos.push_front(v);
 			}
@@ -546,7 +550,18 @@ void drawFormas()
 			raio = sqrt(pow(x_1 - m_x, 2) + pow(y_1 - m_y, 2));
 			drawCirculo(x_1, y_1, raio);
 		}
-
+		
+		if (modo == POL)
+		{
+			int cont = 0;
+			for(auto it = poligonos.begin(); it != poligonos.end(); ++it, cont++)
+			{
+				xp[cont] = it->x;
+				yp[cont] = it->y;
+			}
+			bresenham(x_1, y_1, m_x, m_y);
+			drawPoligono(xp, yp, cont);
+		}
 	}
 
 	//Percorre a lista de formas geometricas para desenhar
@@ -654,11 +669,13 @@ void drawTriangulo(int xa, int ya, int xb, int yb, int xc, int yc)
 
 void drawPoligono(int *xa, int *ya, int i)
 {
-	for(int j; j < i; j++)
+	if (i < 2) return;
+	
+	for(int j = 0; j < i-1; j++)
 	{
 		bresenham(xa[j], ya[j], xa[j + 1], ya[j + 1]);
 	}
-	bresenham(xa[i], ya[i], xa[0], ya[0]);
+	bresenham(xa[i-1], ya[i-1], xa[0], ya[0]);
 }
 
 void drawCirculo(int xm, int ym, int r)
