@@ -5,24 +5,27 @@
  *
  * Aluno: Neemias Calebe Pereira Freire
  *
- * Objetivo: Desenvolva um Editor Grafico em C/C++, estilo o Paint da Microsoft,
- *utilizando as bibliotecas GLUT/OpenGL. Leia os coment�rios do programa
- *paint.cpp e utilize o programa paint.cpp como referencia.
+ *  Objetivo: Desenvolva um Editor Grafico em C/C++, estilo o Paint da Microsoft,
+ *  utilizando as bibliotecas GLUT/OpenGL. Leia os coment�rios do programa
+ *  paint.cpp e utilize o programa paint.cpp como referencia.
  *
  *	--Translacao os botoes 'wasd' do teclado com suas direcoes padroes.
  *  --Rotacao sao os botoes 'q' e 'e'
  *  --Reflexao os botoes 'r' com reflexcao no eixo y e 't' no eixo x.
  *  --Cisalhamento na tecla 'c'
  *  --Escala nas teclas '+' e '-' (bem auto-explicativo :D)
+ *  --Para parar de desenhar um poligono pressione a tecla espaço
+ *
+ *  Não foi implementado o algoritmo de preenchimento de poligonos.
  *
  *	Essas transformacoes sao feitas somente ultima forma desenhada na tela.
  *
  *  Problemas conhecidos:
  *  --Cisalhamento e rotacao de um retangulo realizam uma transformacao
- *inesperada (as vezes nem transforma nada)
+ *    inesperada (as vezes nem transforma nada)
  *  --Rotacao desenfreada faz com que os objetos diminuam de tamanho ate se
- *tornarem somente um pixel. Provavelmente nao calculei o centroide de forma
- *correta.
+ *    tornarem somente um pixel. Provavelmente nao calculei o centroide de forma
+ *    correta.
  *
  */
 
